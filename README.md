@@ -7,55 +7,188 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+# User Management API
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint yang tersedia digunakan untuk melakukan operasi CRUD (Create, Read, Update, Delete) pada tabel `users`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Daftar Endpoint
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Mendapatkan Daftar User
+**Endpoint:** `/api/v1/users`
 
-## Learning Laravel
+**Method:** `GET`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Deskripsi:** Mendapatkan daftar semua user yang tersimpan di database.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Respons Berhasil:**
+```json
+{
+    "status": "success",
+    "data": [
+        {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "created_at": "2025-01-04T12:00:00.000Z",
+            "updated_at": "2025-01-04T12:00:00.000Z"
+        },
+        ...
+    ]
+}
+```
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 2. Menambahkan User Baru
+**Endpoint:** `/api/v1/users`
 
-### Premium Partners
+**Method:** `POST`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+**Deskripsi:** Menambahkan user baru ke database.
 
-## Contributing
+**Header:**
+- `Content-Type: application/json`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Body:**
+```json
+{
+    "name": "Jane Doe",
+    "email": "jane.doe@example.com",
+    "password": "password123"
+}
+```
 
-## Code of Conduct
+**Respons Berhasil:**
+```json
+{
+    "status": "success",
+    "message": "User berhasil ditambahkan.",
+    "data": {
+        "id": 2,
+        "name": "Jane Doe",
+        "email": "jane.doe@example.com",
+        "created_at": "2025-01-04T12:15:00.000Z",
+        "updated_at": "2025-01-04T12:15:00.000Z"
+    }
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Respons Gagal:**
+```json
+{
+    "status": "error",
+    "message": "Validasi gagal.",
+    "errors": {
+        "email": ["Email sudah digunakan."]
+    }
+}
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 3. Mendapatkan Detail User
+**Endpoint:** `/api/v1/users/{id}`
 
-## License
+**Method:** `GET`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Deskripsi:** Mendapatkan detail user berdasarkan ID.
+
+**Respons Berhasil:**
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "created_at": "2025-01-04T12:00:00.000Z",
+        "updated_at": "2025-01-04T12:00:00.000Z"
+    }
+}
+```
+
+**Respons Gagal:**
+```json
+{
+    "status": "error",
+    "message": "User tidak ditemukan."
+}
+```
+
+---
+
+### 4. Memperbarui Data User
+**Endpoint:** `/api/v1/users/{id}`
+
+**Method:** `PUT`
+
+**Deskripsi:** Memperbarui data user berdasarkan ID.
+
+**Header:**
+- `Content-Type: application/json`
+
+**Body:**
+```json
+{
+    "name": "Jane Doe Updated",
+    "email": "jane.doe.updated@example.com"
+}
+```
+
+**Respons Berhasil:**
+```json
+{
+    "status": "success",
+    "message": "User berhasil diperbarui.",
+    "data": {
+        "id": 2,
+        "name": "Jane Doe Updated",
+        "email": "jane.doe.updated@example.com",
+        "created_at": "2025-01-04T12:15:00.000Z",
+        "updated_at": "2025-01-04T12:30:00.000Z"
+    }
+}
+```
+
+**Respons Gagal:**
+```json
+{
+    "status": "error",
+    "message": "Validasi gagal.",
+    "errors": {
+        "email": ["Email sudah digunakan."]
+    }
+}
+```
+
+---
+
+### 5. Menghapus User
+**Endpoint:** `/api/v1/users/{id}`
+
+**Method:** `DELETE`
+
+**Deskripsi:** Menghapus user berdasarkan ID.
+
+**Respons Berhasil:**
+```json
+{
+    "status": "success",
+    "message": "User berhasil dihapus."
+}
+```
+
+**Respons Gagal:**
+```json
+{
+    "status": "error",
+    "message": "User tidak ditemukan."
+}
+```
+
+---
+
+## Catatan Tambahan
+- Endpoint yang dibuat tidak ada otentikasi, sehingga bisa langsung digunakan.
+- Validasi data harus dilakukan menggunakan Laravel Validator untuk memastikan keamanan dan konsistensi data.
+- Dokumentasi dan testing bisa di akses melalui endpoint http://localhost:8000/api/documentation yang sudah dibuat dengan menggunakan Swagger
