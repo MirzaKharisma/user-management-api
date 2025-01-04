@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  app:
+    image: php-laravel-from-scratch
+    links:
+      - database
+    depends_on:
+      - database
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8080:80
+      # host:container
+
+  database:
+    image: mysql:8.0.0
+    environment:
+      MYSQL_USER: "root"
+      MYSQL_DATABASE: "user-management"
+      MYSQL_PASSWORD: ""
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    ports:
+      - 8306:3306
+      # host:container
+    volumes:
+      - database:/var/lib/mysql
+
+volumes:
+  database:
