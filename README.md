@@ -9,7 +9,7 @@
 
 # User Management API
 
-API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint yang tersedia digunakan untuk melakukan operasi CRUD (Create, Read, Update, Delete) pada tabel `users`.
+API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint yang tersedia digunakan untuk melakukan operasi CRUD (Create, Read, Update, Delete) pada tabel `users`. Untuk Web API dapat diakses pada link https://user-management-api-production-2475.up.railway.app/ 
 
 ## Daftar Endpoint
 
@@ -62,3 +62,4 @@ API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint
 - Endpoint yang dibuat tidak ada otentikasi, sehingga bisa langsung digunakan.
 - Validasi data harus dilakukan menggunakan Laravel Validator untuk memastikan keamanan dan konsistensi data.
 - Dokumentasi dan testing bisa di akses melalui endpoint http://localhost:8000/api/documentation yang sudah dibuat dengan menggunakan Swagger.
+- Dokumentasi swagger masih belum bisa diakses melalui link https://user-management-api-production-2475.up.railway.app/ sehingga untuk mengakses swagger masih membutuhkan localhost:8000.
