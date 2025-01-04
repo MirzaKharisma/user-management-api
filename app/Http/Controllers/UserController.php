@@ -109,7 +109,7 @@ class UserController extends Controller
 
         if (!($user['status'])) {
             return response()->json([
-                "message" => "Product not found"
+                "message" => "User not found"
             ], 404);
         }
 
@@ -262,11 +262,13 @@ class UserController extends Controller
 
         if (!$user) {
             return response()->json([
+                "status" => "failed",
                 "message" => "User not found"
             ], 404);
         }
 
         return response()->json([
+            "status" => "success",
             "message" => "User deleted successfully"
         ], 200);
     }

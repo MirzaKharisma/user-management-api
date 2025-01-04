@@ -18,24 +18,7 @@ API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint
 
 **Method:** `GET`
 
-**Deskripsi:** Mendapatkan daftar semua user yang tersimpan di database.
-
-**Respons Berhasil:**
-```json
-{
-    "status": "success",
-    "data": [
-        {
-            "id": 1,
-            "name": "John Doe",
-            "email": "john.doe@example.com",
-            "created_at": "2025-01-04T12:00:00.000Z",
-            "updated_at": "2025-01-04T12:00:00.000Z"
-        },
-        ...
-    ]
-}
-```
+**Deskripsi:** Mendapatkan daftar semua user yang tersimpan di database. Pada endpoint ini, user bisa menyaring user yang ingin dicari menggunakan parameter name, email, phone_number, active_status, dan department.
 
 ---
 
@@ -44,45 +27,7 @@ API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint
 
 **Method:** `POST`
 
-**Deskripsi:** Menambahkan user baru ke database.
-
-**Header:**
-- `Content-Type: application/json`
-
-**Body:**
-```json
-{
-    "name": "Jane Doe",
-    "email": "jane.doe@example.com",
-    "password": "password123"
-}
-```
-
-**Respons Berhasil:**
-```json
-{
-    "status": "success",
-    "message": "User berhasil ditambahkan.",
-    "data": {
-        "id": 2,
-        "name": "Jane Doe",
-        "email": "jane.doe@example.com",
-        "created_at": "2025-01-04T12:15:00.000Z",
-        "updated_at": "2025-01-04T12:15:00.000Z"
-    }
-}
-```
-
-**Respons Gagal:**
-```json
-{
-    "status": "error",
-    "message": "Validasi gagal.",
-    "errors": {
-        "email": ["Email sudah digunakan."]
-    }
-}
-```
+**Deskripsi:** Menambahkan user baru ke database. Data yang harus dimasukkan pada endpoint ini antara lain name, email, phone_number, active_status, dan department. Endpoint ini juga memiliki validasi pada kolom email yang harus memasukkan format email dan email harus unique, dan phone_number yang harus berupa angka dengan digit 10 sampai 15.
 
 ---
 
@@ -91,75 +36,16 @@ API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint
 
 **Method:** `GET`
 
-**Deskripsi:** Mendapatkan detail user berdasarkan ID.
-
-**Respons Berhasil:**
-```json
-{
-    "status": "success",
-    "data": {
-        "id": 1,
-        "name": "John Doe",
-        "email": "john.doe@example.com",
-        "created_at": "2025-01-04T12:00:00.000Z",
-        "updated_at": "2025-01-04T12:00:00.000Z"
-    }
-}
-```
-
-**Respons Gagal:**
-```json
-{
-    "status": "error",
-    "message": "User tidak ditemukan."
-}
-```
+**Deskripsi:** Mendapatkan detail user berdasarkan ID. Jika ID yang dicari tidak ada, maka akan memunculkan error 404 not found, yang menunjukkan bahwa data yang dicari tidak ada.
 
 ---
 
 ### 4. Memperbarui Data User
-**Endpoint:** `/api/v1/users/{id}`
+**Endpoint:** `/api/v1/users`
 
 **Method:** `PUT`
 
-**Deskripsi:** Memperbarui data user berdasarkan ID.
-
-**Header:**
-- `Content-Type: application/json`
-
-**Body:**
-```json
-{
-    "name": "Jane Doe Updated",
-    "email": "jane.doe.updated@example.com"
-}
-```
-
-**Respons Berhasil:**
-```json
-{
-    "status": "success",
-    "message": "User berhasil diperbarui.",
-    "data": {
-        "id": 2,
-        "name": "Jane Doe Updated",
-        "email": "jane.doe.updated@example.com",
-        "created_at": "2025-01-04T12:15:00.000Z",
-        "updated_at": "2025-01-04T12:30:00.000Z"
-    }
-}
-```
-
-**Respons Gagal:**
-```json
-{
-    "status": "error",
-    "message": "Validasi gagal.",
-    "errors": {
-        "email": ["Email sudah digunakan."]
-    }
-}
-```
+**Deskripsi:** Memperbarui data user berdasarkan ID. Data yang harus dimasukkan pada endpoint ini antara lain name, email, phone_number, active_status, dan department. Endpoint ini juga memiliki validasi pada kolom email yang harus memasukkan email dan phone_number yang harus berupa angka dengan digit 10 sampai 15. Yang menjadi pembeda dengan create adalah terletak pada validasi email yang tidak harus unique agar orang yang berniat tidak mengubah email tidak kesulitan dan harus ada ID pada body json.
 
 ---
 
@@ -168,27 +54,11 @@ API ini dibuat menggunakan teknologi Laravel 8.x dengan database MySQL. Endpoint
 
 **Method:** `DELETE`
 
-**Deskripsi:** Menghapus user berdasarkan ID.
-
-**Respons Berhasil:**
-```json
-{
-    "status": "success",
-    "message": "User berhasil dihapus."
-}
-```
-
-**Respons Gagal:**
-```json
-{
-    "status": "error",
-    "message": "User tidak ditemukan."
-}
-```
+**Deskripsi:** Menghapus user berdasarkan ID, dimana jika berhasil akan memunculkan response status success dan massage user deleted successfully. Fitur ini menerapkan softdelete, dimana fitur ini memungkinkan untuk menghapus data pada API, namun tidak menghapus data pada database, sehingga data yang terhapus melalui API ini dapat dikembalikan jika diperlukan. Jika id tidak ditemukan, maka akan menghasilkan response berupa status failed, dan message User not found.
 
 ---
 
 ## Catatan Tambahan
 - Endpoint yang dibuat tidak ada otentikasi, sehingga bisa langsung digunakan.
 - Validasi data harus dilakukan menggunakan Laravel Validator untuk memastikan keamanan dan konsistensi data.
-- Dokumentasi dan testing bisa di akses melalui endpoint http://localhost:8000/api/documentation yang sudah dibuat dengan menggunakan Swagger
+- Dokumentasi dan testing bisa di akses melalui endpoint http://localhost:8000/api/documentation yang sudah dibuat dengan menggunakan Swagger.
