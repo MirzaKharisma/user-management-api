@@ -11,4 +11,3 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 !storage/api-docs/
-!public/vendor/l5-swagger/
